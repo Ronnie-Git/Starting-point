@@ -18,4 +18,8 @@
 
 将本机的公匙添加到github
 
+`git config --global user.name "自己的用户名"`
+
+`git config --global user.email "自己的邮箱"`
+
 在本机建立一个文件夹将github资料库拷贝过来`git clone 自己的仓库链接`
