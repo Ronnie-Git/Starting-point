@@ -14,11 +14,13 @@ Unix MAC APPStore 是闭源
 
 `.d` 文件 是目录
 
-`sudo apt_get install *`  安装软件
+`sudo apt-get install *`  安装软件
 
 `sudo apt-cache search * `  查找软件
 
 ## 2.命令
+
+命令变量赋值时不能加空格
 
 `ls`  查看当前目录文件
 
@@ -28,7 +30,7 @@ Unix MAC APPStore 是闭源
 
 `touch` 创建空白文件
 
-`cd .. ` 返回上一层
+`cd .. ` 返回上一层  `cd -` 返回上一次进入的文件
 
 `echo` 输出 打印
 
@@ -38,13 +40,9 @@ Unix MAC APPStore 是闭源
 
 `/home` 不是家目录  `HOME` 家目录
 
-`cd -` 返回上一次进入的文件
-
-`rm` 删除  `-f` 强制
+`rm` 删除  `-f` 强制  `-r` 递归
 
 `mv` 移动
-
-命令变量赋值时不能加空格
 
 `scp`  拷贝文件到远程主机
 
@@ -58,7 +56,17 @@ Unix MAC APPStore 是闭源
 
 `df -h`  查看文件系统占用空间
 
-## 3.装ubuntu系统
+## 3.ssh
+
+下载`openssh-server`
+
+`ssh-keygen`  生成公用密钥
+
+`ifconfig` 查看本机IP地址
+
+将本主机的`id_rsa.pub` 传到目标机器上的 `.ssh/authorized_keys` (使用`scp`传) (`ssh-copy-id -i ~/.ssh/id_rsa.pub 目标机器用户名@地址`)
+
+## 4.装ubuntu系统
 
 #### **创建主分区：**
 

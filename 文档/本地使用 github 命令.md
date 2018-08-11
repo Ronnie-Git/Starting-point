@@ -9,3 +9,7 @@
 `git push` 提交
 
 `git pull` 更新同步本地和github
+
+`git log` 查看历史提交状态
+
+`git reset --hard ID号` 退回到某个版本命令
