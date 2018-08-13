@@ -66,7 +66,15 @@ Unix MAC APPStore 是闭源
 
 将本主机的`id_rsa.pub` 传到目标机器上的 `.ssh/authorized_keys` (使用`scp`传) (`ssh-copy-id -i ~/.ssh/id_rsa.pub 目标机器用户名@地址`)
 
-## 4.装ubuntu系统
+## 4.vim
+
+`shift+z` 挂起vim
+
+`jobs`  查看挂起的有哪些
+
+`fg 序号` 返回vim
+
+## 5.装ubuntu系统
 
 #### **创建主分区：**
 
