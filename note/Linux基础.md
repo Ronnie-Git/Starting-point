@@ -56,6 +56,24 @@ Unix MAC APPStore 是闭源
 
 `df -h`  查看文件系统占用空间
 
+`which` 查看命令在哪 `eg: which ls`
+
+`type` 查看命令类型 `eg: type ls`
+
+`history` 查看历史命令
+
+`!编号`   执行该命令
+
+`ctrl+r` 匹配最近的历史名命令
+
+`date` 查看时间
+
+
+
+`p` 管道  先进先出  出去就没了
+
+
+
 ## 3.ssh
 
 下载`openssh-server`
@@ -66,6 +84,8 @@ Unix MAC APPStore 是闭源
 
 将本主机的`id_rsa.pub` 传到目标机器上的 `.ssh/authorized_keys` (使用`scp`传) (`ssh-copy-id -i ~/.ssh/id_rsa.pub 目标机器用户名@地址`)
 
+
+
 ## 4.vim
 
 `shift+z` 挂起vim
@@ -73,6 +93,26 @@ Unix MAC APPStore 是闭源
 `jobs`  查看挂起的有哪些
 
 `fg 序号` 返回vim
+
+
+
+`ps -ef | grep 内容`   (`ps -ef`是查看所有的进程的 然后用`grep`筛选出你要的信息)
+
+`kill 名称`  杀死进程
+
+`kill -9 名称`  强制杀死进程
+
+`ctrl+c `  终止进程
+
+`ctrl+z`  挂起进程
+
+`bg`  把被中断的任务放在后台执行
+
+`jobs`  查看挂起的有哪些
+
+`fg 序号` 返回进程
+
+
 
 ## 5.装ubuntu系统
 
