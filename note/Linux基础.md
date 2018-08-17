@@ -88,7 +88,7 @@ Unix MAC APPStore 是闭源
 
 ## 4.vim
 
-`shift+z` 挂起vim
+`cril+z` 挂起vim
 
 `jobs`  查看挂起的有哪些
 
