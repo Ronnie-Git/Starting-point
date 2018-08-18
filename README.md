@@ -1,12 +1,10 @@
 # Starting-point
 
 ### Euler
-https://projecteuler.net/
-**前50道的代码训练，涉及到一些简单的算法**
+https://projecteuler.net/ **前50道的代码训练，涉及到一些简单的算法**
 
 ### jsk
-https://www.jisuanke.com/
-**记录刷题的文件，保存着一些自己刷题时遇到过难点的题目**
+https://www.jisuanke.com/ **记录刷题的文件，保存着一些自己刷题时遇到过难点的题目**
 
 ### note
 **针对自己学习过程中遇到的难点、重点整理的笔记**
