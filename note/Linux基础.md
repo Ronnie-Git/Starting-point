@@ -44,7 +44,11 @@ Unix MAC APPStore 是闭源
 
 `mv` 移动
 
-`scp`  拷贝文件到远程主机
+
+
+`scp`  拷贝文件到远程主机 `scp 文件名  远程主机名@远程主机IP:文件名`
+
+
 
 `port` 端口
 
