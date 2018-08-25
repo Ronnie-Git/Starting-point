@@ -7,7 +7,19 @@ root_user=`last | cut -d " " -f 1 | grep "[a-zA-Z0-9]" | grep -v "wtmp" | grep -
 IP=(`who | awk '{print $1"_"$5"_"$2}'`) # 将当前在线用户的IP等信息存入数组
 IP_num=`who -q | tail -n 1 | cut -d "=" -f 2` # 计算当前在线用户总数
 
-echo -e "$time $user_num [${active_user[0]},${active_user[1]},${active_user[2]}] [$root_user] [""\c"
+echo -e "$time $user_num [""\c"
+
+for i in {0..2}; do # 输出活跃用户最多输出三个
+    if [[ ${active_user[$i]} ]]; then
+        if [[ $i -ne 0 ]]; then
+            echo -e ",""\c"
+        fi
+        echo -e "${active_user[$i]}""\c"
+    fi
+done
+echo -e "]" "\c"
+
+echo -e "[$root_user] [""\c"
 
 ((IP_num=$IP_num-1))
 for i in `seq 0 $IP_num`; do # 输出当前在线用户的IP等信息
