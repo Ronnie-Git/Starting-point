@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#define MAX_N 1000000
+#define MAX_N 100000
 
 int prime[MAX_N + 5] = {0};
 
