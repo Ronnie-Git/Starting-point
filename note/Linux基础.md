@@ -16,11 +16,17 @@ Unix MAC APPStore 是闭源
 
 `sudo apt-get install *`  安装软件
 
+`sudo apt-get --purge remove` 删除软件及配置信息
+
 `sudo apt-cache search * `  查找软件
+
+`sudo apt-get install -f`  修复依赖关系
 
 ## 2.命令
 
 命令变量赋值时不能加空格
+
+`sudo updatedb`更新索引（本地文件） 查找文件时可用
 
 `ls`  查看当前目录文件
 
