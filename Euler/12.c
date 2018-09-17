@@ -18,16 +18,17 @@ void init() {
         if (!prime[i]) {
             prime[++prime[0]] = i;
             dnum[i] = 2; // 素数只有两个约数
-            mnum[i] = 1; // 幂数
+            mnum[i] = 1; // 最小因子幂数
         }
         for (int j = 1; j <= prime[0] && prime[j] * i <= MAX_N; j++) {
             prime[prime[j] * i] = 1;
             if (i % prime[j] == 0) {
-                mnum[i * prime[j]] = mnum[i] + 1; // 
-                dnum[i * prime[j]] = dnum[i] / (mnum[i] + 1) * (mnum[i] + 2); // 删除重复因子
+                mnum[i * prime[j]] = mnum[i] + 1; // 因数prime[j]又多了一个 
+                dnum[i * prime[j]] = dnum[i] / (mnum[i] + 1) * (mnum[i] + 2); // x = 最可能大的数
+                // 计算一个合数的因子个数（一个合数由一个最可能大的数和一个最小质数标记掉） dnum[x * prime[j]] = dnum[x] / (mnum[x] + 1) * (mnum[x] + 2)
                 break;
             } else {
-                mnum[i * prime[j]] = 1; //
+                mnum[i * prime[j]] = 1; // 最小幂次为1
                 dnum[i * prime[j]] = dnum[i] * dnum[prime[j]]; // i 和 prime[j] 互质
             }
         }
