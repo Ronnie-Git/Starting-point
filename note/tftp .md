@@ -84,6 +84,14 @@ tftp>`q`退出
 
 
 
+### sftp
+
+`sftp 远程主机名@远程ID`
+
+**ssh tftp的结合体：可以使用`ls` `cd`等终端命令**
+
+
+
 ### 安装 LAMP
 
 https://blog.csdn.net/trh0123/article/details/54645335
