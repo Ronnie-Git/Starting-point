@@ -9,16 +9,15 @@
 
 #define LL long long int
 LL ans(LL x, LL n, LL y) {
-    if (n == 0) return x  % y;
     LL z = 1;
-    while (n > 0) {
+    while (n) {
         if (n & 1) {
             z = z * x % y;
         }
         x = x * x % y;
         n >>= 1;
     }
-    return z;
+    return z % y;
 }
 
 int main() {
