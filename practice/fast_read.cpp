@@ -48,7 +48,6 @@ template<typename T> inline void sdf(T &x) {
 int main() {
     int n, a;
     sdf(n); //文件输出
-    cout << 2 << endl;
     while (n--) {
         sdf(a);
     }
