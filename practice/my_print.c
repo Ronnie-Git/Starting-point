@@ -53,6 +53,7 @@ int main() {
     int n = 123;
     my_printf("hello world\n");
     my_printf("n = %d\n", n);
+    my_printf("n = %d\n", 0);
     my_printf("n = %d\n", 12000);
     my_printf("n = %d\n", -567);
     my_printf("n = %d\n", INT32_MIN);
