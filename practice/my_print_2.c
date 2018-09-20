@@ -22,11 +22,13 @@ int my_printf(const char *frm, ...) {
                 switch(frm[i]) {
                     case 'd' : {
                         int64_t temp = va_arg(arg, int);
-                        char x[1000], k = 0;
+                        int x[1000], k = 0;
                         if (temp < 0) {
                             putchar('-');
-                            temp = (~temp) + 1;
+                            temp = (~temp) + 1; // 负数取反加1变正数
+                            //temp *= -1;
                         }
+                        if (temp == 0) putchar('0'); // temp为0 直接返回 0
                         while (temp) {
                             x[k++] = temp % 10 + '0';
                             temp /= 10;
