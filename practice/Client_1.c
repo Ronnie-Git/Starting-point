@@ -15,8 +15,6 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <signal.h>
-#include <fcntl.h>
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -41,24 +39,16 @@ int main(int argc, char *argv[]) {
     /*numbytes = recv(sockfd, buf, BUFSIZ, 0); // 接收服务器端信息  
     buf[numbytes] = '\0';  
     printf("%s", buf);*/
-    char *str = argv[3];
-    FILE *fd; 
-    fd = fopen(str, "r");
     while(1) {
         printf("发送:");
-        /*scanf("%[^\n]s", buf);
-        getchar();
-        send(sockfd, buf, strlen(buf), 0);*/
+        scanf("%s", buf);
+        send(sockfd, buf, strlen(buf), 0);
         /*if ((numbytes = recv(sockfd, buf, BUFSIZ, 0)) > 0) { // 接收服务器返回的数据  
             buf[numbytes] = '\0'; 
             printf("发送成功,对方接受到：%s\n", buf);  
         } else {
             printf("发送失败\n");
         }*/
-        fread(buf, sizeof(char), sizeof(buf), fd);
-        send(sockfd, buf, strlen(buf), 0);
-        fclose(fd);
-        break;
     }
     close(sockfd);
     return 0;
