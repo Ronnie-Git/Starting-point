@@ -28,7 +28,7 @@ Vector *__init(int n) {
 
 int expand(Vector *v) {
     //printf("[%p] expanding\n", v->data);
-    int *p = (int *)realloc(v->data, sizeof(int) * 2 * v->size);
+    int *p = (int *)realloc(v->data, sizeof(int) * 2 * v->size); // 重新申请内存空间
     if (p == NULL) return 0;
     v->data = p;
     v->size *= 2;
