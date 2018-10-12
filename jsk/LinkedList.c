@@ -42,7 +42,7 @@ void insert(LinkList *l, int value, int ind) {
     LinkNode *new_node = getNewNode(value);
     new_node->next = p->next;
     p->next = new_node;
-    l->length += 1;
+    l->length -= 1;
     return ;
 }
 
