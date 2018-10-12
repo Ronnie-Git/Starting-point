@@ -45,7 +45,7 @@ void insert(LinkList *l, int value, int ind) {
     new_node->next = p->next;
     if (p->next != NULL) p->next->prior = new_node;
     p->next = new_node;
-    if (p != NULL) new_node->prior = p;
+    new_node->prior = p;
     l->length += 1;
     return ;
 }
