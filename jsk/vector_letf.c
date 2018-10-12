@@ -48,6 +48,6 @@ int main() {
         printf("%d ", a->data[i]);
     }
     printf("%d\n", a->data[a->length - 1]);
-    
+    free(a);    
     return 0;
 }
