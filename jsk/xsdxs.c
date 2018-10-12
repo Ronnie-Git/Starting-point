@@ -40,5 +40,6 @@ int main() {
     scanf("%d", &k);
     init(a, k + 10, k);
     printf("%d\n", func(a));
-	return 0;
+    free(a);
+    return 0;
 }
