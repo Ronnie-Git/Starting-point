@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# IFS 内部域分隔符
+# echo $IFS
+# echo "IFS" | od -b
+
 OLDIFS=${IFS}
 IFS=$'\n'
 
