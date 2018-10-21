@@ -50,7 +50,6 @@ int calc(const char *str, int l, int r) {
 
 int main() {
     char str[100];
-    int i = 0;
     while (scanf("%[^\n]s", str) != EOF) {
         getchar();
         printf("%s = %d\n", str, calc(str, 0, strlen(str) - 1));
