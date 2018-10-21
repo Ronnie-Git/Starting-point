@@ -92,5 +92,6 @@ int main() {
             }
         }
     }
+    clear(q);
     return 0;
 }
