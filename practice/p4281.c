@@ -11,6 +11,8 @@
 #define MAX_N 1000000
 #define MAX_K 25
 
+#define eq(a, b, c) ((a == b) ? c : ((a == c) ? b : a))
+
 struct Edge {
     int v, n;
 } g[MAX_N << 1];
@@ -68,13 +70,7 @@ int main() {
     for (int i = 0; i < m; i++) {
         scanf("%d %d %d", &a, &b, &c);
         int x = lca(a, b), y = lca(b, c), z = lca(a, c), ans = 0;
-        if (x == y) {
-            ans = z;
-        } else if (x == z) {
-            ans = y;
-        } else {
-            ans = x;
-        }
+        ans = eq(x, y, z);
         printf("%d %d\n", ans, dep[a] + dep[b] + dep[c] - dep[x] - dep[y] - dep[z]);
     }
     return 0;
