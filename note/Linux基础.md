@@ -134,6 +134,8 @@ eg: `echo "a/b/c" | cut -d '/' -f 1`   **执行结果是`a`**
 
 ## 4.vim
 
+`vimtutor` vim教程
+
 `cril+z` 挂起vim
 
 `jobs`  查看挂起的有哪些
@@ -160,7 +162,11 @@ eg: `echo "a/b/c" | cut -d '/' -f 1`   **执行结果是`a`**
 
 
 
-`:vsplit 文件名` vim 分屏
+
+
+`:split 文件名` vim 分屏(上下)
+
+`:vsplit 文件名` vim 分屏(左右)
 
 `ctrl + w` 切换这两个窗口
 
