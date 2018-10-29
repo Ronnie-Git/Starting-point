@@ -60,10 +60,11 @@ Node *build_haffman(Node **arr, int n) {
 }
 
 void extract_code(Node *root, char (*code)[20], int k, char *buff) {
-    // 将树的每个节点中的key赋值为从根节点到达它的路径值（左：0 右：1）
     buff[k] = 0;
-    if (root->key) {
+    if (root->key) { // key为askII  eg:a是97
+        // 将code[root->key]赋值为从根节点到达它(root->key 即该字符 eg: a, b)的路径值（左：0 右：1）
         strcpy(code[root->key], buff);
+        // 因为在哈夫曼树中每个每个root->key中有值(eg: a, b)的节点必是叶子节点所以赋完路径后直接return;
         return ;
     }
     buff[k] = '0';
