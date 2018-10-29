@@ -11,7 +11,7 @@
 #include <string.h>
 
 typedef struct Node {
-    int key, freq;
+    int key, freq; // key->askII freq->频数
     struct Node *lchild, *rchild;
 } Node;
 
@@ -39,10 +39,10 @@ int swap_node(Node **p, Node **q) {
 }
 
 Node *build_haffman(Node **arr, int n) {
-    Node INIT_NODE = {0, INT32_MAX, NULL, NULL};
-    Node *first = &INIT_NODE, *second = &INIT_NODE;
     for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 2; j++) {
+        // i控制循环次数 决定本轮频数第一小和第二小放置的位置（数组下标）即本轮数组的最后一位和倒数第二位
+        for (int j = 0; j < n - i - 2; j++) { // i增加后j的边界缩小（等同于将上一轮中频数第一小的和频数第二小的删除）
+            // 找出频数第一小的和第二小的
             if (arr[j]->freq < arr[n - i - 1]->freq) {
                 swap_node(arr + j, arr + n - i - 1);
             } 
@@ -50,17 +50,17 @@ Node *build_haffman(Node **arr, int n) {
                 swap_node(arr + j, arr + n - i - 2);
             }
         }
+        // 频数第一小的和频数第二小的建成一棵树重新放回数组中（将原来频数第一小的和第二小的从数组中删除）
         Node *temp = getNewNode(0, arr[n - i - 1]->freq + arr[n - i - 2]->freq);
         temp->lchild = arr[n - i - 1];
         temp->rchild = arr[n - i - 2];
-        //swap_node(arr + n - i - 1, arr + n - i - 1);
-        //swap_node(arr + n - i - 2, arr + n - i - 2);
         arr[n - i - 2] = temp;
     }
     return arr[0];
 }
 
 void extract_code(Node *root, char (*code)[20], int k, char *buff) {
+    // 将树的每个节点中的key赋值为从根节点到达它的路径值（左：0 右：1）
     buff[k] = 0;
     if (root->key) {
         strcpy(code[root->key], buff);
