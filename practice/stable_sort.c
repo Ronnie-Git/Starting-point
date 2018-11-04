@@ -10,6 +10,7 @@
 #include <string.h>
 #include <time.h>
 
+// 只有当a和b不相等时才能用异或
 #define swap(a, b) { \
     a ^= b; b ^= a; a ^= b; \
 }
