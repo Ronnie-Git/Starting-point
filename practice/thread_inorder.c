@@ -20,7 +20,7 @@ Node *init(int key) {
     Node *p = (Node *)malloc(sizeof(Node));
     p->key = key;
     p->lchild = p->rchild = NULL;
-    p->ltag = p->rtag = NORMAL;
+    p->ltag = p->rtag = NORMAL; // 没线索时为0
     return p;
 }
 
@@ -36,11 +36,11 @@ void build(Node *root) {
     if (root == NULL) return ;
     static Node *pre = NULL;
     build(root->lchild);
-    if (root->lchild == NULL) {
+    if (root->lchild == NULL) { // 左孩子为空，将左孩子指向其前驱，左线索赋值为1
         root->lchild = pre;
         root->ltag = THREAD;
     }
-    if (pre != NULL && pre->rchild == NULL) {
+    if (pre != NULL && pre->rchild == NULL) { //  pre右孩子为空，将pre右孩子指向其root，右线索赋值为1
         pre->rchild = root;
         pre->rtag = THREAD;
     }
