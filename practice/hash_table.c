@@ -36,7 +36,7 @@ HashTable *init_hashtable(int n) { // 头插法
 // APHash ZobristHash
 int BKDRHash(char *str) {
     int seed = 31, hash = 0;
-    for (int i = 0; str[i]; i++) hash = hash *seed + str[i];
+    for (int i = 0; str[i]; i++) hash = hash * seed + str[i];
     return hash & 0x7fffffff;
 }
 
