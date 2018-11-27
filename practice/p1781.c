@@ -14,14 +14,8 @@ int main() {
     scanf("%d", &n);
     for (int i = 1; i <= n; i++) {
         scanf("%s", str[i]);
-    }
-    for (int i = 1; i <= n; i++) {
-        if (strlen(str[i]) > strlen(str[ans])) {
-            ans = i;
-        }
-        if (strlen(str[i]) == strlen(str[ans]) && strcmp(str[i], str[ans]) > 0) {
-            ans = i;
-        }
+        if (strlen(str[i]) > strlen(str[ans])) ans = i;
+        if (strlen(str[i]) == strlen(str[ans]) && strcmp(str[i], str[ans]) > 0) ans = i;
     }
     printf("%d\n%s\n", ans, str[ans]);
     return 0;
