@@ -20,13 +20,11 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 #include "common.h"
-//#include "queue_3.h"
-#include "ip.h"
 #include "linklist_1.h"
-#include <time.h>
-#include "soc.h"
+//#include "soc.h"
+//#include "ip.h"
 
-#define MAX_N 3
+#define MAX_N 5
 
 void *func(void *argv) {
     LinkList *l = (LinkList *)argv;
@@ -66,6 +64,8 @@ void *func(void *argv) {
             }
             p = p->next;
             if (flag < 0) del(l, del_node);
+        } else {
+            p = l->head.next;
         }
         sleep(5);
     }
@@ -96,12 +96,11 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < MAX_N; i++) {
         l[i] = init(i);
     }
-    srand(time(0));
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 10; i++) {
         char temp_IP[100] = {0}, temp_port[100] = {0};
         get_IP("ip", i, temp_IP);
         get_IP("port", i, temp_port);
-        insert(l[i % MAX_N], temp_IP, atoi(temp_port), 0);
+        insert(l[i % MAX_N], temp_IP, atoi(temp_port));
     }
     int num = 0, onli;
     pthread_t t[MAX_N];
@@ -127,8 +126,8 @@ int main(int argc, char *argv[]) {
         if (flag) continue;
 
         num += 1;
-        insert(l[num % MAX_N], IP, 8725, 1);
-      
+        insert(l[num % MAX_N], IP, 8725);
+        printf("num %d\n", num); 
     }
     return 0;
 }
