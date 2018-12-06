@@ -21,10 +21,6 @@
 #include <sys/wait.h>
 #include "common.h"
 #include "linklist_1.h"
-//#include "soc.h"
-//#include "ip.h"
-
-#define MAX_N 5
 
 void *func(void *argv) {
     LinkList *l = (LinkList *)argv;
@@ -73,13 +69,14 @@ void *func(void *argv) {
 }
 
 int main(int argc, char *argv[]) {
-    int fd, new_fd, struct_len, numbytes, i;
+    int fd, new_fd, struct_len, numbytes;
     struct sockaddr_in server_addr;
     struct sockaddr_in client_addr;
     char buff[BUFSIZ]; // 缓冲区
-    char server_port[100];
+    char server_port[100], temp_ins[100];
 
-    int g = get("common.conf", "port", server_port);
+    int ret_g = get("common.conf", "port", server_port);
+    ret_g = get("common.conf", "ins", temp_ins);
 
     server_addr.sin_family = AF_INET; // IP地址
     server_addr.sin_port = htons(atoi(server_port)); // 端口
@@ -92,6 +89,8 @@ int main(int argc, char *argv[]) {
     printf("绑定成功\n");
     while(listen(fd, 10) == -1); // 进入监听状态
     printf("正在监听中......\n");
+    
+    int MAX_N = atoi(temp_ins);
     LinkList *l[MAX_N];
     for (int i = 0; i < MAX_N; i++) {
         l[i] = init(i);
@@ -102,13 +101,15 @@ int main(int argc, char *argv[]) {
         get_IP("port", i, temp_port);
         insert(l[i % MAX_N], temp_IP, atoi(temp_port));
     }
-    int num = 0, onli;
+
     pthread_t t[MAX_N];
-    char IP[100];
-    int port;
     for (int i = 0; i < MAX_N; i++) {
         pthread_create(&t[i], NULL, func, (void *)l[i]);
     }
+
+    char IP[100];
+    int port;
+    int num = 0;
     while (1) {
         new_fd = accept(fd, (struct sockaddr *)&client_addr, &struct_len);
         printf("出现访客\n");
@@ -129,6 +130,7 @@ int main(int argc, char *argv[]) {
         insert(l[num % MAX_N], IP, 8725);
         printf("num %d\n", num); 
     }
+
     return 0;
 }
 
