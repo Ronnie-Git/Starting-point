@@ -27,43 +27,47 @@ void *func(void *argv) {
     LinkNode *p = l->head.next;
     while (1) {
         output(l);
-        if (p) {
-            LinkNode *del_node = p;
-            int flag = soc_con(p->IP, p->port);
-            if (flag >= 0) {
-                char IP[100];
-                int port, numbytes;
-                char buff[BUFSIZ] = {0};
-                while((numbytes = recv(flag, buff, BUFSIZ, 0)) > 0) { // 接收数据
-                    //buff[numbytes] = '\0';
-                    strcpy(IP, p->IP); 
-                    port = p->port;
-                    //printf("%s %d: %s\n", IP, port, buff);
-                    /*if(send(connect, buff, numbytes, 0) < 0) {  // 将数据原样返回
-                        perror("write");  // 返回失败 报错
-                        return 1;  
-                    }*/
-                    char filename[200] = {0}, data[BUFSIZ] = {0};
-                    int t = buff[0] - '0', k = strlen(IP);
-                    mkdir(IP, 0775); // 同linux mkdir建立目录后的权限一致
-                    strncpy(filename, IP, k);
-                    filename[k] = '/';
-                    strncpy(filename + 1 + k, buff + 1, t);
-                    strncpy(data, buff + 1 + t, strlen(buff + 1 + t));
-                    FILE *fd;
-                    fd = fopen(filename, "a+");
-                    fwrite(data, sizeof(char), strlen(data), fd);
-                    fclose(fd);
-                    memset(buff, 0, sizeof(buff));
-                }
-                printf("访客\"%s %d\"退出\n", IP, port);
-            }
-            p = p->next;
-            if (flag < 0) del(l, del_node);
-        } else {
+        if (p == NULL) {
             p = l->head.next;
+            continue;
         }
-        sleep(5);
+
+        LinkNode *del_node = p;
+        int con_fd = soc_con(p->IP, p->port);
+        if (con_fd < 0) {
+            p = p->next;
+            del(l, del_node);
+            continue;
+        }
+
+        char IP[100];
+        int port, numbytes;
+        char buff[BUFSIZ] = {0};
+        strcpy(IP, p->IP); 
+        port = p->port;
+        while((numbytes = recv(con_fd, buff, BUFSIZ, 0)) > 0) { // 接收数据
+            //buff[numbytes] = '\0';
+            //printf("%s %d: %s\n", IP, port, buff);
+            /*if(send(connect, buff, numbytes, 0) < 0) {  // 将数据原样返回
+                perror("write");  // 返回失败 报错
+                return 1;  
+            }*/
+            char filename[200] = {0}, data[BUFSIZ] = {0};
+            int t = buff[0] - '0', k = strlen(IP);
+            mkdir(IP, 0775); // 同linux mkdir建立目录后的权限一致
+            strncpy(filename, IP, k);
+            filename[k] = '/';
+            strncpy(filename + 1 + k, buff + 1, t);
+            strncpy(data, buff + 1 + t, strlen(buff + 1 + t));
+            FILE *fd;
+            fd = fopen(filename, "a+");
+            fwrite(data, sizeof(char), strlen(data), fd);
+            fclose(fd);
+            memset(buff, 0, sizeof(buff));
+        }
+        printf("访客\"%s %d\"退出\n", IP, port);
+        p = p->next;
+        //sleep(5);
     }
     return NULL;
 }
