@@ -43,8 +43,8 @@ void *func(void *argv) {
         int con_fd = soc_con(p->IP, p->port);
         if (con_fd < 0) {
             p = p->next;
-            del(l, del_node);
             del_hash(h, del_node->IP);
+            del(l, del_node);
             continue;
         }
 
