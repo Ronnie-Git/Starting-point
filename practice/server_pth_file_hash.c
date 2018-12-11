@@ -152,9 +152,9 @@ int main(int argc, char *argv[]) {
         if (search_hash(h, IP) == 1) continue;
 
         num += 1;
+        printf("第 %d 位新访客加入队列\n", num); 
         insert(l[num % MAX_N], IP, atoi(client_port));
         insert_hash(h, IP);
-        printf("num %d\n", num); 
     }
 
     return 0;
