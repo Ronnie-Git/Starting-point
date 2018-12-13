@@ -82,6 +82,9 @@ int main(int argc, char *argv[]) {
         sleep(1);
         func("mem.log", "./memlog.sh", new_fd);
         func("disk.log", "./Disk_information.sh", new_fd);
+        func("user.log", "./User_information_statistics.sh", new_fd);
+        func("sys.log", "./System_operation.sh", new_fd);
+        func("mal.log", "./malicious_process_detection.sh", new_fd);
         sleep(5);
     }
     return 0;
