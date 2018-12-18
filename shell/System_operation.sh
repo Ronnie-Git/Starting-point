@@ -30,7 +30,7 @@ for i in {0..2}; do # $i是Percentage数组的下标
     elif ((Alarm[0]=${Alarm[0]}+1)) && [ ${Percentage[$i]} -le ${Alarm[${Alarm[0]}]} ]; then
         echo -e " note""\c"
     else
-        echo -e " waring""\c"
+        echo -e " warning""\c"
     fi
 done
 echo
