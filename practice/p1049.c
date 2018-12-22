@@ -7,10 +7,11 @@
 
 #include <stdio.h>
 
+#define max(a, b) ((a) > (b) ? (a) : (b))
+
 int main() {
     int V, n, v[40] = {0};
-    int num[20005] = {0};
-    num[0] = 1;
+    int dp[20005] = {0};
     scanf("%d", &V);
     scanf("%d", &n);
     for (int i = 0; i < n; i++) {
@@ -19,15 +20,10 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         for (int j = V; j >= v[i]; j--) {
-            if (num[j - v[i]] == 1) num[j] = 1;
+            dp[j] = max(dp[j], dp[j - v[i]] + v[i]); 
         }
     }
-
-    for (int i = V; i >= 0; i--) {
-        if (num[i]) {
-            printf("%d\n", V - i);
-            break;
-        }
-    }
+    
+    printf("%d\n", V - dp[V]);
     return 0;
 }
