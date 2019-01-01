@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#给当前目录下的文件和目录标号
+#给当前目录下的文件和目录删除标号
 
 for i in `ls | sort -n -r`; do
     if [[ $i == "a.out" ]]; then
