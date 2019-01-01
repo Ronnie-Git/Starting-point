@@ -25,7 +25,7 @@ Node *getNewNode() {
     p->flag = 0;
     return p;
 }
-
+// tire 
 int insert(Node *node, const char *str) {
     Node *p = node;
     int cnt = 1;
