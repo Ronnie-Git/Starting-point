@@ -21,17 +21,37 @@ int main() {
         val = rand() % 1000;
         arr.changeValue(i, val);
     }
+    cout << "arr: ";
     arr.output();
-    cout << arr.getLength() << endl;
+    cout << "length = " << arr.getLength() << endl;
     
     ind = rand() % MAX_N;
     arr.getValue(ind, ans);
-    cout << "getValue() " << ind << ": " << ans << endl;
+    cout << "getValue() " << "ind = " << ind << ": " << ans << endl;
     
     ind = rand() % MAX_N, val = rand() % 1000;
     arr.changeValue(ind, val);
-    cout << "changeValue() " << ind << ": " << val << endl;
+    cout << "changeValue() " << "ind = " << ind << ": " << val << endl;
+    cout << "arr: ";
     arr.output();
+
+    cout << endl << "Arr test = arr......" << endl;
+    Arr test = arr;
+    cout << "test: ";
+    test.output();
+    cout << "length = " << test.getLength() << endl;
+    
+    ind = rand() % MAX_N;
+    test.getValue(ind, ans);
+    cout << "getValue() " << "ind = " << ind << ": " << ans << endl;
+    
+    ind = rand() % MAX_N, val = rand() % 1000;
+    test.changeValue(ind, val);
+    cout << "changeValue() " << "ind = " << ind << ": " << val << endl;
+    cout << "test: ";
+    test.output();
+
     arr.clean();
+    test.clean();
     return 0;
 }

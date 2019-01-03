@@ -15,20 +15,28 @@ Arr::Arr() {
     data = new int[length];
 }
 
+Arr::Arr(const Arr &obj) {
+    length = obj.length;
+    data = new int[obj.length];
+    for (int i = 0; i < obj.length; i++) {
+        data[i] = obj.data[i];
+    }
+}
+
 int Arr::getLength() {
     return length;
 }
 
-int Arr::getValue(int ind, int &val) {
-    if (ind >= length) return 0;
+bool Arr::getValue(int ind, int &val) {
+    if (ind >= length || ind < 0) return false;
     val = data[ind];
-    return 1;
+    return true;
 }
 
-int Arr::changeValue(int ind, int val) {
-    if (ind >= length) return 0;
+bool Arr::changeValue(int ind, int val) {
+    if (ind >= length || ind < 0) return false;
     data[ind] = val;
-    return 1;
+    return true;
 }
 
 void Arr::output() {

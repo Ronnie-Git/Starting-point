@@ -16,9 +16,10 @@ private :
     int length;
 public :
     Arr();
+    Arr(const Arr &obj);
     int getLength();
-    int getValue(int ind, int &val);
-    int changeValue(int ind, int val);
+    bool getValue(int ind, int &val);
+    bool changeValue(int ind, int val);
     void output();
     void clean();
 };
