@@ -16,8 +16,7 @@ typedef struct Node {
 
 typedef struct DATNode {
     int base, check;
-}DATNode;
-
+} DATNode;
 
 Node *getNewNode() {
     Node *p = (Node *)calloc(sizeof(Node), 1);
@@ -76,7 +75,7 @@ int Transform(Node *node, DATNode *trie, int ind) {
         int temp = Transform(node->next[i], trie, trie[ind].base + i);
         if (temp > ret) ret = temp;
     }
-    return ret;
+    return ret;    
 }
 
 int search(DATNode *trie, const char *str) {
@@ -91,20 +90,23 @@ int search(DATNode *trie, const char *str) {
 }
 
 int main() {
-    int n, cnt = 1, cnt2 = 0;
+    int n, cnt1 = 1, cnt2 = 0;
     char str[100];
     Node *root = getNewNode();
     scanf("%d", &n);
     while (n--) {
         scanf("%s", str);
-        cnt += insert(root, str);
+        cnt1 += insert(root, str);
     }
-    DATNode *trie = (DATNode *)calloc(sizeof(DATNode), cnt * 10);
+    DATNode *trie = (DATNode *)calloc(sizeof(DATNode), cnt1 * 10);
     cnt2 = Transform(root, trie, 1);
     while (scanf("%s", str) != EOF) {
         printf("search %s = %d\n", str, search(trie, str));
     }
-    printf("Normal Trie : %d\n", cnt * sizeof(Node));
+    printf("Normal Trie : %d\n", cnt1 * sizeof(Node));
     printf("Double Array Trie : %d\n", cnt2 * sizeof(DATNode));
+    for (int i = 0; i <= cnt2; i++) {
+        printf("%d %d %d\n", i, trie[i].base, trie[i].check);
+    }
     return 0;
 }
