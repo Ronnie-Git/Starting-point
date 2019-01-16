@@ -17,11 +17,8 @@ int main() {
     cin >> n >> V;
     for (int i = 0; i < n; i++) cin >> v[i] >> w[i];
     for (int i = 0; i < n; i++) {
-        for (int j = V; j >= v[i]; j--) {
-            int cnt = j / v[i];
-            for (int l = 1; l <= cnt; l++) {
-                dp[j] = max(dp[j], dp[j - l * v[i]] + l * w[i]);
-            }
+        for (int j = v[i]; j <= V; j++) {
+            dp[j] = max(dp[j], dp[j - v[i]] + w[i]);
         }
     }
     cout << dp[V] << endl;
