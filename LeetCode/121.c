@@ -10,11 +10,10 @@
 #include <stdio.h>
 
 int maxProfit(int* prices, int pricesSize) {   
-    int ans = 0, min = prices[0], max = prices[0];
+    int ans = 0, min = prices[0];
     for (int i = 0; i < pricesSize; i++) {
-        if (prices[i] < min) min = prices[i], max = prices[i];
-        if (prices[i] > max) max = prices[i];
-        if (max - min > ans) ans = max - min;
+        if (prices[i] < min) min = prices[i];
+        if (prices[i] - min > ans) ans = prices[i] - min;
     }
     return ans;
 }
