@@ -51,10 +51,14 @@ void clear(UnionSet *u) {
     return ;
 }
 
+// 获取每个位置编号
 int getInd(int i, int j, int m) {
     return i * m + j + 1;
 }
 
+// 并查集问题 只需确定矩阵中 O(字母) 与 边界的连通性即可
+// 将矩阵中每个位置编号 0号为边界
+// 只需将矩阵中每个 O(字母) 与它左或上为 O(字母) 的位置相连即可 边界上的 O(字母) 与0号相连
 void solve(char** board, int boardRowSize, int boardColSize) {
     UnionSet *u = init(boardRowSize * boardColSize + 5);
     for (int i = 0; i < boardRowSize; i++) {
