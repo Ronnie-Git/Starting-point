@@ -12,7 +12,7 @@
 #define BEGIN_LETTER 'a'
 
 typedef struct Node {
-    int flag, num, *arr;
+    int flag;
     struct Node *next[BASE], *fail;
 } Node;
 
@@ -55,11 +55,10 @@ void clear_queue(Queue *q) {
 
 Node *getNewNode() {
     Node *p = (Node *)calloc(sizeof(Node), 1);
-    p->num = 0;
     return p;
 }
 
-int insert(Node *root, const char *str, int num) {
+int insert(Node *root, const char *str, int *ind) {
     int cnt = 0;
     Node *p = root;
     for (int i = 0; str[i]; i++) {
@@ -67,12 +66,8 @@ int insert(Node *root, const char *str, int num) {
         if (p->next[ind] == NULL) p->next[ind] = getNewNode(), ++cnt;
         p = p->next[ind];
     }
-    if (p->flag == 0) {
-        p->arr = (int *)calloc(sizeof(int), 1005);
-    }
-    p->flag = 1;
-    p->arr[p->num] = num;
-    p->num++;
+    if (p->flag == 0) p->flag = *ind;
+    else *ind = p->flag;
     return cnt;
 }
 
@@ -104,8 +99,7 @@ void build_ac(Node *root, int n) {
     return ;
 }
 
-int match(Node *root, const char *str, int *num) {
-    int cnt = 0;
+void match(Node *root, const char *str, int *num) {
     Node *p = root;
     for (int i = 0; str[i]; i++) {
         int ind = str[i] - BEGIN_LETTER;
@@ -114,33 +108,35 @@ int match(Node *root, const char *str, int *num) {
         else p = p->next[ind];
         Node *q = p;
         while (q) {
-            cnt += q->flag;
-            if (q->flag) {
-                for (int j = 0; j < q->num; j++) {
-                    num[q->arr[j]] += 1;
-                }
-            }
+            if (q->flag) num[q->flag]++;
             q = q->fail;
         }
     }
-    return cnt;
+    return ;
 }
 
 int main() {
     Node *root = getNewNode();
     int n, cnt = 0;
-    int num[1005] = {0};
     char str[100005] = {0};
+    
+    // num数组存编号（第一个模式串的编号设为1而不是0）如果当前字符串之前已经出现过，那么存第一次出现的编号（结构体中flag存的是编号）
+    int num[1005] = {0};
+    // num2数组存存该号字符串出现了几次
+    int num2[1005] = {0};
+    
     scanf("%d", &n);
     for (int i = 0; i < n; i++) {
+        int ind = i + 1;
         scanf("%s", str);
-        cnt += insert(root, str, i);
+        cnt += insert(root, str, &ind);
+        num[i] = ind;
     }
     build_ac(root, cnt);
     scanf("%s", str);
-    match(root, str, num);
+    match(root, str, num2);
     for (int i = 0; i < n; i++) {
-        printf("%d: %d\n", i, num[i]);
+        printf("%d: %d\n", i, num2[num[i]]);
     }
     return 0;
 }
