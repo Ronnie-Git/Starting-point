@@ -56,7 +56,7 @@ void build_ac(Node *node) {
     // 如果当前节点的失败指针为空，通过递归它的父亲节点来建立它的失败指针
     if (node->fail == NULL) build_ac(node->father); 
     
-    for (int i = 0; i < BASE; i++) { // 建立每个孩子的失败指针
+    for (int i = 0; i < BASE_CNT; i++) { // 建立每个孩子的失败指针
         if (node->next[i] == NULL) continue;
         
         // 因为在之前其他节点建立失败指针时，可能已经把当前node节点孩子的失败指针都建立完了
