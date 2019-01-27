@@ -16,6 +16,7 @@ typedef struct data {
     int w[4];
 } data;
 
+// 背包问题 将主件和附件组成物品组
 int main() {
     data num[70];
     for (int i = 0; i < 70; i++) num[i].cnt = 0;
