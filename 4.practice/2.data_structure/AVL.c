@@ -71,12 +71,12 @@ Node *right_rotate(Node *root) {
 Node *maintain(Node *root) {
     if (abs(root->lchild->height - root->rchild->height) <= 1) return root;
     if (root->lchild->height > root->rchild->height) {
-        if (root->lchild->lchild->height < root->lchild->rchild->height) {
+        if (root->lchild->lchild->height < root->lchild->rchild->height) { // LR
             root->lchild = left_rotate(root->lchild);
         }
         root = right_rotate(root);
     } else {
-        if (root->rchild->rchild->height < root->rchild->lchild->height) {
+        if (root->rchild->rchild->height < root->rchild->lchild->height) { // RL
             root->rchild = right_rotate(root->rchild);
         }
         root = left_rotate(root);
