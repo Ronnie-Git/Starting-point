@@ -20,7 +20,7 @@ int n, m, ans = 0; // n：代表列 m：代表行 ans：能走到的黑转数量
 void DFS(int x,int y) {
     // x，now_x 代表行
     // y，now_y 代表列
-    vis[x][y] = 1;
+    vis[x][y] = 1; // 访问过
     for (int i = 0; i < 4; i++) {
         int now_x = x + dir[i][0];
         int now_y = y + dir[i][1];
