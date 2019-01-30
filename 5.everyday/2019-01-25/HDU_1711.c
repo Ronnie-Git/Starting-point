@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// KMP思想 将每个整型数字类比作一个字符
 int KMP(int *str, int *pattern, int n, int m) {
     int *next = (int *)malloc(sizeof(int) * m);
     next[0] = -1;
