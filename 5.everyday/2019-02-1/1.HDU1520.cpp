@@ -5,52 +5,49 @@
 	> Created Time: 2019年02月01日 星期五 09时55分37秒
  ************************************************************************/
 
-#include<iostream>
-#include<cmath>
-#include<algorithm>
-#include<cstdio>
-#include<cstdlib>
-#include<cstring>
- 
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
+#include <cmath>
+#include <vector>
+#include <cstdio>
+
 using namespace std;
- 
-#define MAX_N 6005
- 
-int n;
-int dp[MAX_N][2] = {0}, father[MAX_N] = {0};//dp[i][0]0表示不去，dp[i][1]1表示去了
-bool vis[MAX_N] = {0};
- 
-void tree_dp(int node) {
-    vis[node] = 1;
-    for (int i = 1; i <= n; i++) {
-        if (!vis[i] && father[i] == node) {//i为下属
-            tree_dp(i);//递归调用孩子结点，从叶子结点开始dp
-            //关键
-            dp[node][1] += dp[i][0];//上司来,下属不来
-            dp[node][0] += max(dp[i][1], dp[i][0]);//上司不来，下属来、不来
-        }
+
+#define N 6010
+
+int num[N] = {0}, dp[N][2] = {0}, f[N] = {0},n;
+vector<int> E[N]; // 存节点的子节点
+
+void dfs(int cur) {
+    dp[cur][1] = num[cur];
+    for (int i = 0; i < E[cur].size(); i++) {
+        int son = E[cur][i];
+        dfs(son);
+        dp[cur][0] += max(dp[son][1], dp[son][0]);
+        dp[cur][1] += dp[son][0];
     }
     return ;
 }
- 
+
 int main() {
-    int f, c, root;
     while (scanf("%d", &n) != EOF) {
-        memset(dp, 0, sizeof(dp));
-        memset(father, 0, sizeof(father));
-        memset(vis, 0, sizeof(vis));
-        for (int i = 1; i <= n; i++) cin >> dp[i][1];
-        root = 0;//记录父结点
-        int flag = 1;
-        while (scanf("%d %d", &c, &f) != EOF && (c || f)) {
-            father[c] = f;
-            if (root == c || flag) root = f;
+        for (int i = 1; i <= n; i++) {
+            cin >> num[i];
+            E[i].clear();
+            dp[i][0] = dp[i][1] = 0;
+            f[i] = -1;
         }
-        // 找父节点
-        while (father[root]) root = father[root];
-        tree_dp(root);
-        cout << max(dp[root][0],dp[root][1]) << endl;
+        int a, b;
+        while (scanf("%d%d", &a, &b) != EOF) {
+            if (a == 0 && b == 0) break;
+            E[b].push_back(a);
+            f[a]=b;
+        }
+        int root = 1;
+        while (f[root] != -1) root = f[root]; // 找根节点
+        dfs(root);
+        cout << max(dp[root][1], dp[root][0]) << endl;
     }
     return 0;
 }
-
