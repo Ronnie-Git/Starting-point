@@ -207,6 +207,80 @@ int main() {
 
 
 
+### 例题 HDU3506
+
+#### 题目链接
+
+http://acm.hdu.edu.cn/showproblem.php?pid=3506
+
+#### 所学知识
+
+区间dp、四边形优化
+
+#### 题目讲解
+
+将前n-1依次个移到第n个后面，将环变成线。
+
+定义状态`dp[i,j]`表示将区间`[i,j]`的石子合并所需的最小代价，则状态转移方程为
+
+`dp[i, j] = min(dp[i, k] + dp[k + 1,j] + sum[i, j])`
+
+利用四边形不等式优化，限制`k[i,j]`的取值范围在`k[i, j-1] ~ k[i+1,j]`之间
+
+#### 代码实现
+
+```c++
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int MAX_N = 2010;
+const int INF = 0x3f3f3f3f;
+
+int dp[MAX_N][MAX_N] = {0};
+int sum[MAX_N] = {0};
+int w[MAX_N] = {0};
+int num[MAX_N][MAX_N] = {0};
+
+int main() {
+    int n;
+    while (scanf("%d", &n) != EOF) {
+        sum[0] = 0;
+        memset(dp, INF, sizeof(dp));
+        for (int i = 1; i <= n * 2; i++) {
+            if (i <= n) cin >> w[i];
+            else w[i] = w[i - n];
+            sum[i] = sum[i - 1] + w[i];
+            dp[i][i] = 0;
+            num[i][i] = i;
+        }
+        for (int len = 2; len <= n; len++) {
+            for (int j = 1; j + len <= n * 2; j++) {
+                int ends = j + len - 1;
+                for (int i = num[j][ends - 1]; i <= num[j + 1][ends]; i++) {
+                    int temp = dp[j][i] + dp[i + 1][ends] + sum[ends] - sum[j - 1];
+                    if (dp[j][ends] > temp) {
+                        dp[j][ends] = temp;
+                        num[j][ends] = i;
+                    }
+                }
+            }
+        }
+    
+        int ans = INF;
+        for (int i = 1; i <= n; i++) {
+            ans = min(ans, dp[i][i + n - 1]);
+        }
+        cout << ans << endl;
+    }
+    return 0;
+}
+```
+
+
+
 ### 例题 HDU2089
 
 #### 题目链接
@@ -415,5 +489,66 @@ int main() {
     }
     return 0;
 }
+```
+
+
+
+### 例题 HDU3853
+
+#### 题目大意
+
+- 有一个迷宫r行m列，开始点在[1,1]，现在要走到[r,c]
+- 对于在点[x,y]可以打开一扇门走到[x+1,y]或者[x,y+1]
+- 消耗2点魔力
+- 问平均消耗多少魔力能走到[r,c]
+
+#### 所学知识
+
+概率dp
+
+#### 题目讲解
+
+假设`dp[i][j]`表示在点`[i,j]`到达`[r,c]`所需要消耗的平均魔力(期望)，则`从dp[i][j]`可以到达:
+`dp[i][j],dp[i+1,j],dp[i][j+1];`
+
+**对应概率分别为**
+`p1,p2,p3`
+由`E(aA+bB+cC...)=aEA+bEB+cEC+...`包含状态A,B,C的期望可以分解子期望求解 
+得到`dp[i][j]=p1*dp[i][j]+p2*dp[i+1][j]+p3*dp[i][j+1]+2;`
+
+#### 代码实现
+
+```c++
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <cmath>
+using namespace std;
+ 
+const int MAX_N = 1010;
+double dp[MAX_N][MAX_N] = {0}, p[MAX_N][MAX_N][3] = {0};
+ 
+int main(){
+    int n, m;
+    while (scanf("%d %d", &n, &m) != EOF) {
+        memset(dp, 0, sizeof(dp));
+        memset(p, 0, sizeof(p));
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                scanf("%lf %lf %lf", &p[i][j][0], &p[i][j][1], &p[i][j][2]);
+            }
+        }
+        for (int i = n; i >= 1; i--) {
+            for (int j = m; j >= 1; j--) {
+                if (i == n && j == m) continue;
+                if (fabs(p[i][j][0] - 1.0) < 1e-8) continue; //该点无路可走,期望值肯定为0(dp[i][j]=0)
+                dp[i][j] = (p[i][j][1] * dp[i][j + 1] + p[i][j][2] * dp[i + 1][j] + 2.00) / (1.00 - p[i][j][0]);
+            }
+        }
+        printf("%.3lf\n", dp[1][1]);
+    }
+    return 0;
+} 
 ```
 
