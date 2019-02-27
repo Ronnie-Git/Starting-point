@@ -150,6 +150,18 @@ int main() {
 
 
 
+#### 思路分析
+
+将前n-1依次个移到第n个后面，将环变成线。
+
+定义状态`dp[i,j]`表示将区间`[i,j]`的石子合并所需的最小代价，则状态转移方程为
+
+`dp[i, j] = min(dp[i, k] + dp[k + 1,j] + sum[i, j])`
+
+利用四边形不等式优化，限制`k[i,j]`的取值范围在`k[i, j-1] ~ k[i+1,j]`之间
+
+
+
 #### 代码（HDU3506）
 
 ```c++
@@ -177,12 +189,12 @@ int main() {
             else w[i] = w[i - n];
             sum[i] = sum[i - 1] + w[i];
             dp[i][i] = 0;
-            num[i][i] = i;
+            num[i][i] = i; // 分割点初始化
         }
         for (int len = 2; len <= n; len++) {
             for (int j = 1; j + len <= n * 2; j++) {
                 int ends = j + len - 1;
-                for (int i = num[j][ends - 1]; i <= num[j + 1][ends]; i++) {
+                for (int i = num[j][ends - 1]; i <= num[j + 1][ends]; i++) { 
                     int temp = dp[j][i] + dp[i + 1][ends] + sum[ends] - sum[j - 1];
                     if (dp[j][ends] > temp) {
                         dp[j][ends] = temp;
@@ -298,62 +310,7 @@ int main() {
 
 ### 例题 HDU2089
 
-
-
-#### 思路分析
-
-数位上不能有4也不能有连续的62，没有4的话在枚举的时候判断一下，不枚举4就可以保证状态合法了，所以这个约束没有记忆化的必要。
-
-对于62，涉及到两位，当前一位是6或者不是6这两种不同情况计数是不相同的，所以要用状态来记录不同的方案数。
-
-`dp[pos][sta]`表示当前第pos位，前一位是否是6的状态，这里sta只需要去0和1两种状态就可以了，不是6的情况可视为同种，不会影响计数。
-
-
-
-### 代码
-
-```c++
-#include <iostream>
-#include <cstdio>
-#include <cstring>
-#include <string>
-using namespace std;
-typedef long long ll;
-int a[20] = {0};
-int dp[20][2] = {0};
-int dfs(int pos, int pre, int sta, bool limit) {
-    if (pos == -1) return 1;
-    if (!limit && dp[pos][sta] != -1) return dp[pos][sta];
-    int up = (limit ? a[pos] : 9);
-    int tmp = 0;
-    for (int i = 0; i <= up; i++) {
-        if (pre == 6 && i == 2) continue;
-        if (i == 4) continue;//都是保证枚举合法性
-        tmp += dfs(pos - 1, i, i == 6, limit && i == a[pos]);
-    }
-    if (!limit) dp[pos][sta] = tmp;
-    return tmp;
-}
-int solve(int x) {
-    int pos = 0;
-    while (x) {
-        a[pos++] = x % 10;
-        x /= 10;
-    }
-    return dfs(pos - 1, -1, 0, true);
-}
-
-int main() {
-    int le, ri;
-    //memset(dp,-1,sizeof dp);可优化
-    while(scanf("%d%d", &le, &ri) != EOF && le + ri) {
-        memset(dp,-1,sizeof dp);
-        printf("%d\n",solve(ri) - solve(le - 1));
-    }
-    return 0;
-}
-
-```
+http://acm.hdu.edu.cn/showproblem.php?pid=2089
 
 
 
@@ -410,74 +367,9 @@ int main() {
 
 
 
-### HDU1520
+### 例题 HDU1520
 
-#### 思路分析
-
-树形dp的常规入门题：设`dp[i][0]`表示:当前这个点不选，`dp[i][1]`表示当前这个点选择的最优解。
-
-**转移方程**
-
-`dp[cur][0]+=max(dp[son][1],dp[son][0]);`
-
-当前这个点不选，那他的孩子可选可不选，取最大的。 
-
-`dp[cur][1]+=dp[son][0]`
-
-当前这点选择，那他的孩子就不能选择。
-
-
-
-### 代码
-
-```c++
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
-#include <cmath>
-#include <vector>
-#include <cstdio>
-
-using namespace std;
-
-#define N 6010
-
-int num[N] = {0}, dp[N][2] = {0}, f[N] = {0},n;
-vector<int> E[N]; // 存节点的子节点
-
-void dfs(int cur) {
-    dp[cur][1] = num[cur];
-    for (int i = 0; i < E[cur].size(); i++) {
-        int son = E[cur][i];
-        dfs(son);
-        dp[cur][0] += max(dp[son][1], dp[son][0]);
-        dp[cur][1] += dp[son][0];
-    }
-    return ;
-}
-
-int main(){
-    while(scanf("%d", &n) != EOF){
-        for (int i = 1; i <= n; i++){
-            cin >> num[i];
-            E[i].clear();
-            dp[i][0] = dp[i][1] = 0;
-            f[i] = -1;
-        }
-        int a, b;
-        while (scanf("%d%d", &a, &b) != EOF) {
-            if (a == 0 && b == 0) break;
-            E[b].push_back(a);
-            f[a]=b;
-        }
-        int root = 1;
-        while (f[root] != -1) root = f[root]; // 找根节点
-        dfs(root);
-        cout << max(dp[root][1], dp[root][0]) << endl;
-    }
-    return 0;
-}
-```
+http://acm.hdu.edu.cn/showproblem.php?pid=1520
 
 
 
@@ -537,67 +429,9 @@ x = x & (x − 1)
 
 
 
-### HDU1992
+### 例题 HDU1992
 
-#### 思路分析
-
-算成n行的砖，每行有四。然后用4个01位表示一行，如果是0表示这一行不会占用下一行的地方，如果是1表示会占用下一行的砖。
-
-状态转移有三种：
-
-1. 当前行当前位为1，那么直接转移到下一位
-2. 当前行当前位为0，那么可以表示下一行可以为1
-3. 当前行当前位和下一位为00，那么下一行也可以为00
-
-
-
-#### 代码
-
-```c++
-#include <iostream>
-
-using namespace std;
- 
-int dp[1005][16] = {0};
- 
-void dfs(int r, int c, int cur, int next) {
-//分别表示当前行，当前列,当前状态，可转移的状态
-    if (c > 3) {
-        dp[r + 1][next] += dp[r][cur];
-        return;
-    }
-    if (!(cur & (1 << c))) {
-        dfs(r, c + 1, cur, next | (1 << c));   //竖着放，用1
-        if (c <= 2 && !(cur & (1 << (c + 1)))) {
-            dfs(r, c + 2, cur, next);  //也可以横着放，两个0
-        }
-    } else {
-        dfs(r, c + 1, cur, next);   //位置被上面的占了
-    }
-    return ;
-}
-
-void init() {
-    dp[0][0] = 1;
-    for (int i = 0; i < 22; i++) {   //22已经爆int32了
-        for(int j = 0; j < 16; j++) {
-            if (dp[i][j]) dfs(i, 0, j, 0);
-        }
-    }
-    return ;
-}
- 
-int main() {
-    init();
-    int n, x;
-    cin >> n;
-    for (int i = 1; i <= n; i++) {
-        cin >> x;
-        cout << i << " " << dp[x][0] << endl;
-    }
-    return 0;
-}
-```
+http://acm.hdu.edu.cn/showproblem.php?pid=1992
 
 
 
@@ -613,56 +447,4 @@ int main() {
 
 ### 例题 HDU3853
 
-#### 题目大意
-
-* 有一个迷宫r行m列，开始点在[1,1]，现在要走到[r,c]
-* 对于在点[x,y]可以打开一扇门走到[x+1,y]或者[x,y+1]
-* 消耗2点魔力
-* 问平均消耗多少魔力能走到[r,c]
-
-### 思路分析
-
-假设`dp[i][j]`表示在点`[i,j]`到达`[r,c]`所需要消耗的平均魔力(期望)，则`从dp[i][j]`可以到达:
-`dp[i][j],dp[i+1,j],dp[i][j+1];`
-
-**对应概率分别为**
-`p1,p2,p3`
-由`E(aA+bB+cC...)=aEA+bEB+cEC+...`包含状态A,B,C的期望可以分解子期望求解 
-得到`dp[i][j]=p1*dp[i][j]+p2*dp[i+1][j]+p3*dp[i][j+1]+2;`
-
-#### 代码
-
-```c++
-#include <iostream>
-#include <cstdio>
-#include <cstring>
-#include <cstdlib>
-#include <cmath>
-using namespace std;
- 
-const int MAX_N = 1010;
-double dp[MAX_N][MAX_N] = {0}, p[MAX_N][MAX_N][3] = {0};
- 
-int main(){
-    int n, m;
-    while (scanf("%d %d", &n, &m) != EOF) {
-        memset(dp, 0, sizeof(dp));
-        memset(p, 0, sizeof(p));
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                scanf("%lf %lf %lf", &p[i][j][0], &p[i][j][1], &p[i][j][2]);
-            }
-        }
-        for (int i = n; i >= 1; i--) {
-            for (int j = m; j >= 1; j--) {
-                if (i == n && j == m) continue;
-                if (fabs(p[i][j][0] - 1.0) < 1e-8) continue; //该点无路可走,期望值肯定为0(dp[i][j]=0)
-                dp[i][j] = (p[i][j][1] * dp[i][j + 1] + p[i][j][2] * dp[i + 1][j] + 2.00) / (1.00 - p[i][j][0]);
-            }
-        }
-        printf("%.3lf\n", dp[1][1]);
-    }
-    return 0;
-} 
-```
-
+http://acm.hdu.edu.cn/showproblem.php?pid=3853

@@ -49,6 +49,69 @@ int main() {
 
 
 
+### 练习题 HDU1171
+
+#### 题目链接
+
+http://acm.hdu.edu.cn/showproblem.php?pid=1171
+
+#### 所学知识
+
+01背包
+
+#### 题目讲解
+
+01背包变形
+
+保证a组多 应求b组最大能放的，即变成对于b来说的01背包了，总价值为`sum_half = sum / 2`，即b组背包最大容量为sum_half
+
+**状态方程为**
+
+`dp[j] = max(dp[j], dp[j - v[i]] + v[i]);`
+
+b组为`dp[sum_half]`，则a组为`sum - dp[sum_half]`
+
+#### 代码实现
+
+```c++
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int MAX_N = 50010;
+const int MAX_M = 300005;
+
+int v[MAX_N] = {0};
+int dp[MAX_M] = {0};
+
+int main() {
+    int n;
+    while (cin >> n && n > 0) {
+        int sum = 0, x, y, cnt = 0;
+        memset(dp, 0, sizeof(dp));
+        for (int i = 0; i < n; i++) {
+            cin >> x >> y;
+            sum += x * y;
+            while (y--) v[cnt++] = x;
+        }
+        int sum_half = sum / 2;
+        for (int i = 0; i < cnt; i++) {
+            for (int j = sum_half; j >= v[i]; j--) {
+                dp[j] = max(dp[j], dp[j - v[i]] + v[i]);
+            }
+        }
+        cout << sum - dp[sum_half] << " " << dp[sum_half] << endl;
+    }
+    return 0;
+}
+```
+
+
+
+
+
 ### 例题  P1616 疯狂的采药
 
 #### 题目链接
@@ -83,6 +146,191 @@ int main() {
     return 0;
 }
 ```
+
+
+
+### 练习题 HDU1114
+
+#### 题目链接
+
+http://acm.hdu.edu.cn/showproblem.php?pid=1114
+
+#### 所学知识
+
+完全背包
+
+#### 题目讲解
+
+完全背包裸题，直接套模板
+
+#### 代码实现
+
+```c++
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int INF = 0x3f3f3f3f;
+const int MAX_N = 10010;
+int dp[MAX_N] = {0};
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        memset(dp, INF, sizeof(dp));
+        dp[0] = 0;
+        int n, w, m, e, f, V;
+        cin >> e >> f;
+        V = f - e;
+        cin >> n;
+        for (int i = 0; i < n; i++) {
+            cin >> w >> m;
+            for (int j = m; j <= V; j++) {
+                dp[j] = min(dp[j], dp[j - m] + w);
+            }
+        }
+        if (dp[V] < INF) {
+            cout << "The minimum amount of money in the piggy-bank is " << dp[V] << "." << endl;
+        } else {
+            cout << "This is impossible." << endl;
+        }
+    }
+    return 0;
+}
+```
+
+
+
+### 例题 HDU2191
+
+#### 题目链接
+
+http://acm.hdu.edu.cn/showproblem.php?pid=2191
+
+#### 所学知识
+
+多重背包、二进制优化、单调队列优化
+
+#### 题目讲解
+
+**模板题，直接套模板即可**
+
+分别使用三种方法解题：
+
+1. 三层for，01背包
+2. 二进制优化，01背包，直接套模板
+3. 单调队列优化，01背包，直接套模板
+
+#### 代码实现一（二进制优化）
+
+```c++
+#include <iostream>
+#include <cstdio>
+
+#define MAX_N 10000
+
+using namespace std;
+
+typedef struct array {
+    int c, w;
+} array;
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int dp[MAX_N + 5] = {0};
+        int n, m, cnt = 0;
+        array arr[MAX_N + 5];
+        cin >> n >> m;
+        for (int i = 0; i < m; i++) {
+            int c, w, k;
+            cin >> c >> w >> k;
+            for (int j = 1; j <= k; j <= 1) {
+                arr[cnt].c = j * c;
+                arr[cnt++].w = j * w;
+                k -= j;
+            }
+            if (k > 0) {
+                arr[cnt].c = k * c;
+                arr[cnt++].w = k * w;
+            }
+        }
+        for (int i = 0; i < cnt; i++) {
+            for (int j = n; j >= arr[i].c; j--) {
+                dp[j] = max(dp[j], dp[j - arr[i].c] + arr[i].w);
+            }
+        }
+        cout << dp[n] << endl;
+    }
+    return 0;
+}
+```
+
+#### 代码实现二（单调队列优化）
+
+```c++
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+#define MAX_V 100005
+void pack(int *dp, int V, int v, int n, int w) {
+    if (n == 0 || v == 0) return;
+  	if (n == 1) {
+    	for (int i = V; i >= v; --i) {
+      		dp[i] = max(dp[i], dp[i - v] + w);
+		}
+    	return;
+  	}
+  	if (n * v >= V - v + 1) {
+    	for (int i = v; i <= V; ++i) {
+      		dp[i] = max(dp[i], dp[i - v] + w);
+		}
+    	return;    
+  	}
+    
+  	int va[MAX_V], vb[MAX_V];
+  	for (int j = 0; j < v; ++j) {
+    	int pb = 0, pe = -1;
+    	int qb = 0, qe = -1;  
+    	for (int k = j, i = 0; k <= V; k += v, ++i) {
+      		if (pe == pb + n) {
+        		if (va[pb] == vb[qb]) ++qb; 
+        		++pb;
+      		}
+      		int tt = dp[k] - i * w;
+      		va[++pe] = tt;
+      		while (qe >= qb && vb[qe] < tt) --qe;
+      		vb[++qe] = tt;        
+      		dp[k] = vb[qb] + i * w;
+    	}
+  	}
+    return ;
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, m, dp[MAX_V] = {0};
+        cin >> n >> m;
+        for (int i = 0; i < m; i++) {
+            int c, w, k;
+            cin >> c >> w >> k;
+            pack(dp, n, c, k, w);
+        }
+        cout << dp[n] << endl;
+    }
+    return 0;
+}
+```
+
+
 
 
 
@@ -254,7 +502,7 @@ int main() {
             else w[i] = w[i - n];
             sum[i] = sum[i - 1] + w[i];
             dp[i][i] = 0;
-            num[i][i] = i;
+            num[i][i] = i; // 分割点初始化
         }
         for (int len = 2; len <= n; len++) {
             for (int j = 1; j + len <= n * 2; j++) {
@@ -494,6 +742,8 @@ int main() {
 
 
 ### 例题 HDU3853
+
+http://acm.hdu.edu.cn/showproblem.php?pid=3853
 
 #### 题目大意
 
