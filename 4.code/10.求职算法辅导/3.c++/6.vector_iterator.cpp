@@ -7,8 +7,12 @@
 
 #include <iostream>
 #include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <algorithm>
 #include <vector>
-
+#include <map>
+#include <cmath>
 using namespace std;
 
 namespace my {
@@ -28,7 +32,6 @@ namespace my {
         T &operator*() {
             return *p;
         }
-        
         vector_iterator<T> &operator++() {
             p++;
             return *this;
@@ -36,14 +39,15 @@ namespace my {
         vector_iterator<T> operator++(int x) {
             vector_iterator<T> ret(*this);
             p++;
-            return ret; 
+            return ret;
         }
+
     private:
         T *p;
     };
     template<typename T>
     class vector {
-    public:
+    public :
         typedef vector_iterator<T> iterator;
         vector() {
             this->data = nullptr;
@@ -63,30 +67,27 @@ namespace my {
             this->__begin = new iterator(this->data);
             this->__end = new iterator(this->data + this->length);
         }
-
         vector(vector<T> &&arr) : 
             data(arr.data), 
             size(arr.size), 
-            length(arr.length), 
+            length(arr.length),
             __begin(arr.__begin),
             __end(arr.__end)
         {
             arr.data = nullptr;
+            arr.__begin = nullptr;
+            arr.__end = nullptr;
             arr.size = 0;
             arr.length = 0;
-            __begin(arr.__begin);
-            __end(arr.__end);
         }
-
         T &operator[](size_t ind) {
             return this->data[ind];
         }
-
         void expand() {
             int new_size = size * 2 + 1;
             int raw_length = length;
             T *p_arr = new T[new_size];
-            for (int i = 0; i < this->length; i++) {
+            for (int i = 0; i < length; i++) {
                 new(p_arr + i) T(std::move(data[i]));
             }
             clear();
@@ -97,15 +98,12 @@ namespace my {
             __end = new iterator(data + length);
             return ;
         }
-
         iterator begin() {
             return iterator(this->data);
         }
-
         iterator end() {
             return iterator(this->data + this->length);
         }
-
         void push_back(const T &obj) {
             if (this->length >= this->size) {
                 this->expand();
@@ -115,20 +113,18 @@ namespace my {
             ++(*(this->__end));
             return ;
         }
-
         void clear() {
             if (this->data != nullptr) {
                 delete[] this->data;
                 delete this->__begin;
                 delete this->__end;
             }
-            this->data = nullptr;
+            this->data = nullptr;;
             this->__begin = nullptr;
             this->__end = nullptr;
             this->size = 0;
             this->length = 0;
         }
-
         ~vector() {
             clear();
         }
@@ -144,9 +140,9 @@ namespace my {
             arr.push_back(i);
         }
         for (vector<int>::iterator iter = arr.begin(); iter != arr.end(); iter++) {
-            cout  << *iter << endl;
+            cout << *iter << endl;
         }
-
+        return ;
     }
 }
 
