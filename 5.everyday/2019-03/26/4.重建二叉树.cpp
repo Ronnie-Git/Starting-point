@@ -11,11 +11,17 @@ public:
         if (j < i) return nullptr;
         TreeNode *root = new TreeNode(pre[i]);
         int di = i + 1, dj = i + 1, dk = k, dl = k;
-        while (vin[dl] != pre[i]) dl += 1, dj += 1;
+        
+        // 找到左子树的区间
+        while (vin[dl] != pre[i]) dl += 1, dj += 1; 
         dl -= 1, dj -= 1;
-        root->left = build(pre, vin, di, dj, dk, dl);
-        di = dj + 1; dj = j; dk = dl + 2; dl = l;
-        root->right = build(pre, vin, di, dj, dk, dl);
+        
+        // 递归建立左子树
+        root->left = build(pre, vin, di, dj, dk, dl); 
+        
+        // 递归建立右子树
+        di = dj + 1; dj = j; dk = dl + 2; dl = l; // pre[i] 是根，所以 dj + 1 是根的右孩子；vin[dl + 1] 是根，所以 dl + 2 是根的右孩子
+        root->right = build(pre, vin, di, dj, dk, dl); 
         return root;
     }
     TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
