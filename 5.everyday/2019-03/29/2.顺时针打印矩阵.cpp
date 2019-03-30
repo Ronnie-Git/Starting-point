@@ -21,29 +21,17 @@ public:
             int i = is, j = js;
             ret.push_back(matrix[i][j]);
             cnt--;
-            j = js + 1;
-            while (cnt > 0 && j <= je) {
+            for (j = js + 1; cnt > 0 && j <= je; j++, cnt--) {
                 ret.push_back(matrix[is][j]);
-                j++;
-                cnt--;
             }
-            i = is + 1;
-            while (cnt > 0 && i <= ie) {
+            for (i = is + 1; cnt > 0 && i <= ie; i++, cnt--) {
                 ret.push_back(matrix[i][je]);
-                i++;
-                cnt--;
             }
-            j = je - 1;
-            while (cnt > 0 && j >= js) {
+            for (j = je - 1; cnt > 0 && j >= js; j--, cnt--) {
                 ret.push_back(matrix[ie][j]);
-                j--;
-                cnt--;
             }
-            i = ie - 1;
-            while (cnt > 0 && i > is) {
+            for (i = ie - 1; cnt > 0 && i > is; i--, cnt--) {
                 ret.push_back(matrix[i][js]);
-                i--;
-                cnt--;
             }
             is++, js++, ie--, je--;
         }
