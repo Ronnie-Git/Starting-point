@@ -1,7 +1,16 @@
-a = 3
-a + 4
 {
-    a  = 4
-    a + 4
+    def sum = 0;
+    for (def i = 2; i <= 1000; i = i + 1) {
+        def flag = 1;
+        for (def j = 2; j < i; j = j + 1) {
+            if (i % j == 0) {
+                flag = 0;
+            }
+        }
+        if (flag == 1) {
+            sum = sum + i;
+            print i;
+        }
+    }
+    print sum;
 }
-a + 6
