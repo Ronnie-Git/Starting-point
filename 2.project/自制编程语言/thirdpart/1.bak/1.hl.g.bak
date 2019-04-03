@@ -42,10 +42,8 @@ for_expr
 
 while_expr
     : WHILE^ '('! condition_expr ')'! stmt
-    | DO dowhile_block WHILE '(' condition_expr ')' ';' -> ^(DOWHILE condition_expr dowhile_block)
+    | DO '{' stmt '}' WHILE '(' condition_expr ')' ';' -> ^(DOWHILE condition_expr stmt)
     ;
-
-dowhile_block: block -> ^(BLOCK block);
 
 init_expr
     : defid_expr -> ^(DEF defid_expr)

@@ -118,8 +118,6 @@ public:
                 case DEF:
                 case PRINT:
                 case FOR:
-                case WHILE:
-                case DOWHILE:
                 case IF: return true;
             }
         }
@@ -165,27 +163,6 @@ public:
                     IMaster::MasterRun(getChild(tree, 2), &new_param);
                     judg = IMaster::MasterRun(getChild(tree, 1), &new_param);
                 }
-                return ans;
-            }
-            case WHILE: {
-                Paramters new_param(param);
-                int judg = IMaster::MasterRun(getChild(tree, 0), &new_param);
-                int ans = 0;
-                while (judg) {
-                    ans = IMaster::MasterRun(getChild(tree, 1), &new_param);
-                    judg = IMaster::MasterRun(getChild(tree, 0), &new_param);
-                }
-                return ans;
-            }
-            case DOWHILE: {
-                Paramters new_param(param);
-                IMaster::MasterRun(getChild(tree, 0), &new_param);
-                int judg;
-                int ans = 0;
-                do {
-                    ans = IMaster::MasterRun(getChild(tree, 1), &new_param);
-                    judg = IMaster::MasterRun(getChild(tree, 0), &new_param);
-                } while (judg);
                 return ans;
             }
             case DEF: {
