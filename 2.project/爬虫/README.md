@@ -8,6 +8,12 @@
 
 ## 爬虫项目
 
+### 项目需求
+
+爬取 [百度百科--斐波那契数列](https://baike.baidu.com/item/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/99145?fr=aladdin) 五层标题
+
+
+
 ### 前期准备
 
 通常不使用浏览器进行爬虫
@@ -38,12 +44,6 @@
    * [安装scrapy](https://blog.csdn.net/a6864657/article/details/82634187)
 5. xpath
    * [scrapy框架xpath和css选择器语法](https://blog.csdn.net/mouday/article/details/80455560)
-
-
-
-### 项目需求
-
-统计某个在 OJ 上写了多少行代码
 
 
 
