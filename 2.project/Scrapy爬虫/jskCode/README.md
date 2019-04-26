@@ -285,3 +285,29 @@ DOWNLOADER_MIDDLEWARES = {
     'jisuanke.middlewares.JisuankeDownloaderMiddleware': 543,
 }
 ```
+
+
+
+### 5. 运行命令
+
+```bash
+python spider_run.py
+```
+
+
+
+#### spider_run.py
+
+```python
+#!/usr/bin/env python
+# coding=utf-8
+
+import os
+
+# 运行爬取OJ上代码的爬虫
+os.system("scrapy crawl codeSpider")
+
+# 运行统计代码行数的脚本
+os.system("bash code_line.sh")
+```
+

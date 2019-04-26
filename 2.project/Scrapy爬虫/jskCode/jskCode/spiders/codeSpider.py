@@ -52,3 +52,4 @@ class CodespiderSpider(scrapy.Spider):
         code = response.xpath("//pre/text()")[0].extract()
         with open(file_name, "w") as fout:
             fout.write(code.encode("utf8"))
+
