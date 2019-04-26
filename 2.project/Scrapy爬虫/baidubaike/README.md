@@ -10,7 +10,7 @@
 
 ### 项目需求
 
-爬取 [百度百科--斐波那契数列](https://baike.baidu.com/item/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/99145?fr=aladdin) 五层标题
+**爬取 [百度百科--斐波那契数列](https://baike.baidu.com/item/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/99145?fr=aladdin) 五层标题**
 
 
 
@@ -21,7 +21,7 @@
 1. pyenv
    * python 各版本不兼容，需要 pyenv 管理 python 环境，在各版本中切换
    * pyenv install 3.7.1
-   * https://www.cnblogs.com/olajennings/p/8832481.html
+   * [安装pyenv](https://www.cnblogs.com/olajennings/p/8832481.html)
 2. pycharm
    * python 的 IDE
    * 推荐上官网下载 [安装pycharm](https://blog.csdn.net/qq_38683692/article/details/79868391)
@@ -44,6 +44,14 @@
    * [安装scrapy](https://blog.csdn.net/a6864657/article/details/82634187)
 5. xpath
    * [scrapy框架xpath和css选择器语法](https://blog.csdn.net/mouday/article/details/80455560)
+
+
+
+### 开发环境
+
+- scrapy
+- python2.7.10
+- fake_useragent 库
 
 
 
