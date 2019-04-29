@@ -154,7 +154,7 @@ sudo -H pip install fake-useragent
 
 ### 1. 获取网页cookies数据（解决登录问题） 
 
-`<F12>` -> `Application` -> `Cookies` -> **全选(鼠标拉动全选)** -> **复制** -> **粘贴到表格当中** -> **删除后三列** -> **在粘到爬虫项目目录下 cooke_file 文件中**
+`<F12>` -> `Application` -> `Cookies` -> **全选(鼠标拉动全选)** -> **复制** -> **粘贴到表格当中** -> **删除后三列** -> **在粘到爬虫项目目录下 cookie_file 文件中**
 
 
 
