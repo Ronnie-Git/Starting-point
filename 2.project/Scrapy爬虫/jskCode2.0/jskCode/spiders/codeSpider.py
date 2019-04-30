@@ -7,9 +7,12 @@ from selenium import webdriver
 class CodespiderSpider(scrapy.Spider):
     name = 'codeSpider'
     allowed_domains = ['jisuanke.com']
-    start_url = 'https://www.jisuanke.com/course/786?view=study'
+    #start_url = 'https://www.jisuanke.com/course/786?view=study'
+    start_url = 'https://www.jisuanke.com/course/%s?view=study'
     cookie_file = "./cookie_file"
     path = "./data/"
+    lesson_num = ["790", "791", "799", "787", "788", "792", "786", "789"]
+
     
     # 初始化网页起点、cookie等
     def __init__(self):
@@ -23,18 +26,21 @@ class CodespiderSpider(scrapy.Spider):
                 driver.add_cookie(cookie)
         self.driver = driver
 
-    # 开始
+    # 开始爬取八门课程
     def start_requests(self):
-        yield Request(url = self.start_url, callback = self.parse)
+        for i in self.lesson_num:
+            lesson_path = self.path + i + "/"
+            os.mkdir(lesson_path)
+            yield Request(url = self.start_url % i, callback = lambda response, cur_path = lesson_path: self.parse(response, cur_path))
 
     # 获取代码链接和其文件名
-    def parse(self, response):
+    def parse(self, response, cur_path):
         # 获取该课程每个模块的id
         li_list = response.xpath("//@data-chapter-id").extract()
         for li_item in li_list:
             # 获取该模块的名字 并以该名字建立文件夹
             dir_name_temp = "//li[@data-chapter-id='" + str(li_item) + "']/div[@class='chapter-section']/div[@class='chapter-title']/h2/text()"
-            dir_name = self.path + response.xpath(dir_name_temp)[0].extract().encode("utf8")
+            dir_name = cur_path + response.xpath(dir_name_temp)[0].extract().encode("utf8")
             os.mkdir(dir_name) 
             
             # 获取编程题的链接 并将其题目名作为文件名

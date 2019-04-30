@@ -11,4 +11,4 @@ import os
 os.system("scrapy crawl codeSpider")
 
 # 运行统计代码行数的脚本
-#os.system("bash code_line.sh")
+os.system("bash code_line.sh")
