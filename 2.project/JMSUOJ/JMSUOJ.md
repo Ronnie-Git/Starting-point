@@ -179,6 +179,8 @@ use_builtin_checker ncmp
 svn co svn://svn地址 [本地目录全路径] --username 用户名 --password 密码
 ```
 
+也可以在该文件中添加一个管理员和密码
+
 **还未完成svn上传题目。。。**
 
 
