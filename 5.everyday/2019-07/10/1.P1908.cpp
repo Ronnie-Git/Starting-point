@@ -7,9 +7,11 @@
 
 #include <iostream>
 #include <cstdio>
+
 using namespace std;
 
 typedef long long LL;
+
 const int LEN = 500010;
 
 int arr[LEN] = {0}, temp[LEN] = {0};
