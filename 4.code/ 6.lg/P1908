@@ -1,0 +1,41 @@
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+#define lowbit(a) ((a) & (-a))
+#define MAXN 500010
+int tree[MAXN];
+int n;
+
+struct Array {
+	int num, ind;
+	bool operator< (const struct Array tmp) const {
+		if (num == tmp.num) return ind > tmp.ind;
+		return num > tmp.num;
+	}
+};
+struct Array arr[MAXN];
+
+void add(int x, int k) {
+	while (x <= n) tree[x] += k, x += lowbit(x);
+	return ;
+}
+
+int get_sum(int x) {
+	int ret = 0;
+	while (x > 0) ret += tree[x], x -= lowbit(x);
+	return ret;
+}
+
+int main() {
+	long long sum = 0;
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++) scanf("%d", &arr[i].num), arr[i].ind = i + 1;
+	sort(arr, arr + n);
+	for (int i = 0; i < n; i++) {
+		add(arr[i].ind, 1);
+		sum += get_sum(arr[i].ind - 1);
+	}
+	printf("%lld\n", sum);
+	return 0;
+} 
